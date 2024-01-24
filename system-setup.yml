@@ -3,15 +3,28 @@
   roles:
     - system
     - geerlingguy.docker
-    - role: traefik
-      vars:
+  tasks:
+    - name: Set service_cfg for traefik
+      set_fact:
         service_cfg: "{{ traefik }}"
-    - role: watchtower
-      vars:
+    - name: Deploy Traefik
+      include_role:
+        name: traefik
+    - name: Set service_cfg for watchtower
+      set_fact:
         service_cfg: "{{ watchtower }}"
-    - role: autoheal
-      vars:
+    - name: Deploy Watchtower
+      include_role:
+        name: watchtower
+    - name: Set service_cfg for autoheal
+      set_fact:
         service_cfg: "{{ autoheal }}"
-    - role: portainer
-      vars:
+    - name: Deploy Autoheal
+      include_role:
+        name: autoheal
+    - name: Set service_cfg for portainer
+      set_fact:
         service_cfg: "{{ portainer }}"
+    - name: Deploy Portainer
+      include_role:
+        name: portainer
